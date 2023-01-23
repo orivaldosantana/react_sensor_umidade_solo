@@ -1,10 +1,12 @@
 import './body.css' 
 
+import MQTTSub from './mqttsub' 
+
 function Body(props) {
 
   return (
     <div className="Body">
-     <p> Teste</p> 
+     <MQTTSub /> 
     </div>
   );
 }
