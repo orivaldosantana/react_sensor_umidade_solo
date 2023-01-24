@@ -3,6 +3,7 @@ import React from 'react'
 
 import mqtt from 'mqtt/dist/mqtt'
 import { useState } from 'react'
+import { useEffect } from 'react'
 
 const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
@@ -27,17 +28,18 @@ export default function MQTTSub() {
     }
   }
 
-  console.log('Connecting mqtt client!')
-  const client = mqtt.connect(host, options)
-  client.on('connect', () => {
-    client.subscribe('CASA/umidadesolo')
-  })
+  useEffect(() => {
+    console.log('Connecting mqtt client!')
+    const client = mqtt.connect(host, options)
+    client.on('connect', () => {
+      client.subscribe('CASA/umidadesolo')
+    })
 
-  client.on('message', (topic, payload, packet) => {
-    setMessages(payload.toString())
-    console.log('New message from '+topic+': ' + payload.toString()) 
-  })
-
+    client.on('message', (topic, payload, packet) => {
+      setMessages(payload.toString())
+      console.log('New message from ' + topic + ': ' + payload.toString())
+    })
+  }, [])
 
 
   return (
